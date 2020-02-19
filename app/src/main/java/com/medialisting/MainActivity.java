@@ -19,6 +19,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.jp.loggerutils.Logger;
 import com.medialisting.camera.ImageCropActivity;
 import com.medialisting.camera.ImagesActivity;
 import com.medialisting.model.ImagesModel;

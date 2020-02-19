@@ -125,11 +125,8 @@ public class ImagesActivity extends AppCompatActivity implements View.OnClickLis
     @Override
     public void onClick(View v) {
 
-        switch (v.getId()){
-
-            case R.id.iv_CameraActivity_back:
-                onBackPressed();
-                break;
+        if (v.getId() == R.id.iv_CameraActivity_back) {
+            onBackPressed();
         }
     }
 
