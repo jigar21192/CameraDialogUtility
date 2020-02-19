@@ -1,4 +1,4 @@
-package com.jp.adapter;
+package com.jp.cameradialogutility.adapter;
 
 import android.content.Context;
 import android.content.Intent;
@@ -16,9 +16,10 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.medialisting.R;
-import com.medialisting.camera.ImagesActivity;
-import com.medialisting.model.ImagesModel;
+import com.jp.cameradialogutility.R;
+import com.jp.cameradialogutility.camera.ImagesActivity;
+import com.jp.cameradialogutility.model.ImagesModel;
+
 
 import java.util.ArrayList;
 

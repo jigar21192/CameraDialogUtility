@@ -1,4 +1,4 @@
-package com.jp.camera;
+package com.jp.cameradialogutility.camera;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -22,9 +22,7 @@ import android.widget.ToggleButton;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.edmodo.cropper.CropImageView;
-import com.medialisting.R;
-import com.medialisting.utils.ScalingUtilities;
-import com.medialisting.utils.SdcardUtils;
+import com.jp.cameradialogutility.R;
 
 import java.io.File;
 import java.io.FileInputStream;

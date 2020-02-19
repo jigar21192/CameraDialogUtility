@@ -1,4 +1,4 @@
-package com.jp;
+package com.jp.cameradialogutility;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -17,13 +17,13 @@ import androidx.core.content.FileProvider;
 import androidx.fragment.app.FragmentManager;
 
 
-import com.jp.camera.ImageCropActivity;
-import com.jp.camera.ImagesActivity;
 import com.jp.cameradialogutility.R;
-import com.jp.model.ImagesModel;
-import com.jp.utils.BottomSheetPermissionFragment;
-import com.jp.utils.DialogFragmentForResultReceiverUtils;
-import com.jp.utils.SdcardUtils;
+import com.jp.cameradialogutility.camera.ImageCropActivity;
+import com.jp.cameradialogutility.camera.ImagesActivity;
+import com.jp.cameradialogutility.model.ImagesModel;
+import com.jp.cameradialogutility.utils.BottomSheetPermissionFragment;
+import com.jp.cameradialogutility.utils.DialogFragmentForResultReceiverUtils;
+import com.jp.cameradialogutility.utils.SdcardUtils;
 
 import java.io.IOException;
 import java.util.ArrayList;

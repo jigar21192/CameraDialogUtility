@@ -1,4 +1,4 @@
-package com.jp.model;
+package com.jp.cameradialogutility.model;
 
 
 import java.io.Serializable;

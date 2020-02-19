@@ -1,4 +1,4 @@
-package com.jp.camera;
+package com.jp.cameradialogutility.camera;
 
 import android.database.Cursor;
 import android.net.Uri;
@@ -12,9 +12,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.medialisting.R;
-import com.medialisting.adapter.ImagesAdapter;
-import com.medialisting.model.ImagesModel;
+
+import com.jp.cameradialogutility.R;
+import com.jp.cameradialogutility.adapter.ImagesAdapter;
+import com.jp.cameradialogutility.model.ImagesModel;
 
 import java.io.File;
 import java.util.ArrayList;

@@ -1,4 +1,4 @@
-package com.jp.utils;
+package com.jp.cameradialogutility.utils;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
