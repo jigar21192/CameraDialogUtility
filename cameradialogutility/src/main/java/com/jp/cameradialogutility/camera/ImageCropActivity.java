@@ -23,6 +23,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.edmodo.cropper.CropImageView;
 import com.jp.cameradialogutility.R;
+import com.jp.cameradialogutility.utils.ScalingUtilities;
+import com.jp.cameradialogutility.utils.SdcardUtils;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -227,47 +229,47 @@ public class ImageCropActivity extends AppCompatActivity implements OnClickListe
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.btn_crop:
-                croppedImage = cropImageView.getCroppedImage();
+        int id = v.getId();
+        if (id == R.id.btn_crop) {
+            croppedImage = cropImageView.getCroppedImage();
 
-             //   Log.v("croppedImage getWidth", "" + croppedImage.getWidth());
-              //  Log.v("croppedImage getHeight", "" + croppedImage.getHeight());
+            //   Log.v("croppedImage getWidth", "" + croppedImage.getWidth());
+            //  Log.v("croppedImage getHeight", "" + croppedImage.getHeight());
 
-                if (croppedImage.getWidth() > RESIZE_BITMAP_SIZE || croppedImage.getHeight() > RESIZE_BITMAP_SIZE) {
-                    if (croppedImage.getWidth() > croppedImage.getHeight()) {
-                        int new_height = (croppedImage.getHeight() * RESIZE_BITMAP_SIZE) / croppedImage.getWidth();
-                        Bitmap scaledBitmap = ScalingUtilities.createScaledBitmap(croppedImage, (int) RESIZE_BITMAP_SIZE, (int) new_height, ScalingUtilities.ScalingLogic.FIT);
-                        croppedImage.recycle();
-                        croppedImage = scaledBitmap;
-                    } else {
-                        int new_width = (croppedImage.getWidth() * RESIZE_BITMAP_SIZE) / croppedImage.getHeight();
-                        Bitmap scaledBitmap = ScalingUtilities.createScaledBitmap(croppedImage, (int) new_width, (int) RESIZE_BITMAP_SIZE, ScalingUtilities.ScalingLogic.FIT);
-                        croppedImage.recycle();
-                        croppedImage = scaledBitmap;
-                    }
+            if (croppedImage.getWidth() > RESIZE_BITMAP_SIZE || croppedImage.getHeight() > RESIZE_BITMAP_SIZE) {
+                if (croppedImage.getWidth() > croppedImage.getHeight()) {
+                    int new_height = (croppedImage.getHeight() * RESIZE_BITMAP_SIZE) / croppedImage.getWidth();
+                    Bitmap scaledBitmap = ScalingUtilities.createScaledBitmap(croppedImage, (int) RESIZE_BITMAP_SIZE, (int) new_height, ScalingUtilities.ScalingLogic.FIT);
+                    croppedImage.recycle();
+                    croppedImage = scaledBitmap;
+                } else {
+                    int new_width = (croppedImage.getWidth() * RESIZE_BITMAP_SIZE) / croppedImage.getHeight();
+                    Bitmap scaledBitmap = ScalingUtilities.createScaledBitmap(croppedImage, (int) new_width, (int) RESIZE_BITMAP_SIZE, ScalingUtilities.ScalingLogic.FIT);
+                    croppedImage.recycle();
+                    croppedImage = scaledBitmap;
                 }
+            }
 
-              //  Log.e(TAG, "after croppedImage getWidth: " + croppedImage.getWidth());
-              //  Log.e(TAG, "after croppedImage getHeight: " + croppedImage.getHeight());
+            //  Log.e(TAG, "after croppedImage getWidth: " + croppedImage.getWidth());
+            //  Log.e(TAG, "after croppedImage getHeight: " + croppedImage.getHeight());
 
-                // ==============================================================
-                // Image
-                // ==============================================================
-                File imageFile = SdcardUtils.returnImageFileName();
-                try {
-                    FileOutputStream out = new FileOutputStream(imageFile);
-                    croppedImage.compress(Bitmap.CompressFormat.JPEG, 90, out);
-                    out.close();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+            // ==============================================================
+            // Image
+            // ==============================================================
+            File imageFile = SdcardUtils.returnImageFileName();
+            try {
+                FileOutputStream out = new FileOutputStream(imageFile);
+                croppedImage.compress(Bitmap.CompressFormat.JPEG, 90, out);
+                out.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
 
-                SdcardUtils.CROPED_IMAGE_PATH = imageFile;
-                // ==============================================================
-                // Image Thumb
-                // ==============================================================
-                Bitmap bmThumbnail;
+            SdcardUtils.CROPED_IMAGE_PATH = imageFile;
+            // ==============================================================
+            // Image Thumb
+            // ==============================================================
+            Bitmap bmThumbnail;
             /*if(croppedImage.getWidth() >  croppedImage.getHeight())
             {
 	           	int new_width = (croppedImage.getWidth()*150)/croppedImage.getHeight();
@@ -279,64 +281,57 @@ public class ImageCropActivity extends AppCompatActivity implements OnClickListe
 
 	        } */
 
-                bmThumbnail = ThumbnailUtils.extractThumbnail(croppedImage, 270, 270);
-                croppedImage.recycle();
-                croppedImage = bmThumbnail;
-                File thumbImageFile = SdcardUtils.returnThumbImageFileName();
-                try {
-                    FileOutputStream out = new FileOutputStream(thumbImageFile);
-                    croppedImage.compress(Bitmap.CompressFormat.JPEG, 90, out);
-                    out.close();
-                } catch (Exception e) {
-                    e.printStackTrace();
+            bmThumbnail = ThumbnailUtils.extractThumbnail(croppedImage, 270, 270);
+            croppedImage.recycle();
+            croppedImage = bmThumbnail;
+            File thumbImageFile = SdcardUtils.returnThumbImageFileName();
+            try {
+                FileOutputStream out = new FileOutputStream(thumbImageFile);
+                croppedImage.compress(Bitmap.CompressFormat.JPEG, 90, out);
+                out.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            SdcardUtils.CROPED_IMAGE_THUMB = thumbImageFile;
+            //btn_imagecrop_done.setVisibility(View.VISIBLE);
+            if (SdcardUtils.MEDIA_FILE_ORIGINAL != null) {
+                if (SdcardUtils.MEDIA_FILE_ORIGINAL.exists()) {
+                    SdcardUtils.MEDIA_FILE_ORIGINAL.delete();
                 }
-                SdcardUtils.CROPED_IMAGE_THUMB = thumbImageFile;
-                //btn_imagecrop_done.setVisibility(View.VISIBLE);
-                if (SdcardUtils.MEDIA_FILE_ORIGINAL != null) {
-                    if (SdcardUtils.MEDIA_FILE_ORIGINAL.exists()) {
-                        SdcardUtils.MEDIA_FILE_ORIGINAL.delete();
-                    }
-                }
-                //cropImageView.setVisibility(View.GONE);
-                //rel_crop.setVisibility(View.GONE);
-                // img_view_croped_image.setVisibility(View.VISIBLE);
-                //linear_image_display.setVisibility(View.VISIBLE);
-                Bitmap displaybit = getBitmap(SdcardUtils.CROPED_IMAGE_PATH.toString());
-                if (displaybit != null) {
-                    SdcardUtils.ORIGINAL_IMAGE_PATH = "";
-
-                    SdcardUtils.MEDIA_FILE_ORIGINAL = null;
-                    SdcardUtils.isImageUploading = true;
-                    ImageCropActivity.this.finish();
-                    overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
-                    //img_view_croped_image.setImageBitmap(displaybit);
-                }
-            /*SdcardUtils.ORIGINAL_IMAGE_PATH = "";
-            SdcardUtils.MEDIA_FILE_ORIGINAL=null;
-			SdcardUtils.isImageUploading=true;
-			ImageCropActivity.this.finish();*/
-                break;
-
-            case R.id.imgbtn_imagecrop_right:
-                SdcardUtils.isImageUploading = false;
-                SdcardUtils.CROPED_IMAGE_PATH = null;
-                SdcardUtils.CROPED_IMAGE_THUMB = null;
+            }
+            //cropImageView.setVisibility(View.GONE);
+            //rel_crop.setVisibility(View.GONE);
+            // img_view_croped_image.setVisibility(View.VISIBLE);
+            //linear_image_display.setVisibility(View.VISIBLE);
+            Bitmap displaybit = getBitmap(SdcardUtils.CROPED_IMAGE_PATH.toString());
+            if (displaybit != null) {
                 SdcardUtils.ORIGINAL_IMAGE_PATH = "";
-                SdcardUtils.MEDIA_FILE_ORIGINAL = null;
-                //StaticData.mediapath = "";
-                ImageCropActivity.this.finish();
-                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
 
-                break;
-            case R.id.btn_imagecrop_done:
-                SdcardUtils.ORIGINAL_IMAGE_PATH = "";
                 SdcardUtils.MEDIA_FILE_ORIGINAL = null;
                 SdcardUtils.isImageUploading = true;
                 ImageCropActivity.this.finish();
                 overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
-
-
-                break;
+                //img_view_croped_image.setImageBitmap(displaybit);
+            }
+            /*SdcardUtils.ORIGINAL_IMAGE_PATH = "";
+            SdcardUtils.MEDIA_FILE_ORIGINAL=null;
+			SdcardUtils.isImageUploading=true;
+			ImageCropActivity.this.finish();*/
+        } else if (id == R.id.imgbtn_imagecrop_right) {
+            SdcardUtils.isImageUploading = false;
+            SdcardUtils.CROPED_IMAGE_PATH = null;
+            SdcardUtils.CROPED_IMAGE_THUMB = null;
+            SdcardUtils.ORIGINAL_IMAGE_PATH = "";
+            SdcardUtils.MEDIA_FILE_ORIGINAL = null;
+            //StaticData.mediapath = "";
+            ImageCropActivity.this.finish();
+            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+        } else if (id == R.id.btn_imagecrop_done) {
+            SdcardUtils.ORIGINAL_IMAGE_PATH = "";
+            SdcardUtils.MEDIA_FILE_ORIGINAL = null;
+            SdcardUtils.isImageUploading = true;
+            ImageCropActivity.this.finish();
+            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
         }
     }
 
